@@ -7,24 +7,40 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.locatorapp.ProfileApplication
 import com.example.locatorapp.model.RequestBean
 import com.example.locatorapp.model.ResponseBean
 import com.example.locatorapp.repository.ProfileRepository
 import com.example.locatorapp.util.Resource
+import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.io.IOException
 
-class ProfileViewModel(val repository: ProfileRepository, application: Application) :
+class ProfileViewModel(application: Application , val repository: ProfileRepository) :
     AndroidViewModel(application) {
 
     val profileRepository: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
     var responseBean: ResponseBean? = null
 
+    fun getSaveProfileResponse(requestBean: RequestBean) = viewModelScope.launch {
+        saveProfile(requestBean)
+    }
+
     suspend fun saveProfile(requestBean: RequestBean) {
+
         profileRepository.postValue(Resource.Loading())
-        if (hasInternetConnection()) {
-            val response = repository.saveContent(requestBean)
-            profileRepository.postValue(handleSaveProfile(response))
+
+        try {
+            if (hasInternetConnection()) {
+                val response = repository.saveContent(requestBean)
+                profileRepository.postValue(handleSaveProfile(response))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> profileRepository.postValue(Resource.Error("Network Failure"))
+                else -> profileRepository.postValue(Resource.Error("Conversion Error"))
+            }
         }
     }
 
