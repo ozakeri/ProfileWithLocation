@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/news_nav_graph.xml"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.example.locatorapp.ui.fragment.ListFragment"
+        android:label="ListFragment" >
+        <action
+            android:id="@+id/action_listFragment_to_saveFragment"
+            app:destination="@id/saveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/saveFragment"
+        android:name="com.example.locatorapp.ui.fragment.SaveFragment"
+        android:label="SaveFragment" >
+        <action
+            android:id="@+id/action_saveFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.locatorapp.ui.fragment.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
+</navigation>
