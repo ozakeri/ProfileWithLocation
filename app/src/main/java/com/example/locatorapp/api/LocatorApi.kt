@@ -12,8 +12,8 @@ interface LocatorApi {
 
     @POST("api/karfarmas/address")
     suspend fun saveAddress(
-        @Body requestBean: RequestBean,
-        @Header("Content-Type") content_type: String = CONTENT_PROVIDER
 
+        @Header("Content-Type") content_type: String = "application/json",
+        @Body requestBean: RequestBean
     ): Response<ResponseBean>
 }

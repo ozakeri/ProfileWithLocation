@@ -20,11 +20,13 @@ import java.io.IOException
 class ProfileViewModel(application: Application , val repository: ProfileRepository) :
     AndroidViewModel(application) {
 
+    val request = RequestBean(1,"test","09121234567","02188888888","omid"
+        ,"Male","zakeri",35.7717503,51.3365315)
     val profileRepository: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
     var responseBean: ResponseBean? = null
 
     fun getSaveProfileResponse(requestBean: RequestBean) = viewModelScope.launch {
-        saveProfile(requestBean)
+        saveProfile(request)
     }
 
     suspend fun saveProfile(requestBean: RequestBean) {
@@ -34,6 +36,9 @@ class ProfileViewModel(application: Application , val repository: ProfileReposit
         try {
             if (hasInternetConnection()) {
                 val response = repository.saveContent(requestBean)
+                print("requestBean==" + requestBean.address)
+                print("requestBean==" + requestBean.first_name)
+                print("requestBean==" + requestBean.last_name)
                 profileRepository.postValue(handleSaveProfile(response))
             }
         } catch (t: Throwable) {
@@ -47,14 +52,8 @@ class ProfileViewModel(application: Application , val repository: ProfileReposit
     fun handleSaveProfile(response: Response<ResponseBean>): Resource<ResponseBean> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
-                if (responseBean == null) {
-                    responseBean = result
-                } else {
-                    var oldData = responseBean
-                    val newData = result
-                    oldData = newData
-                }
-                return Resource.Success(responseBean ?: result)
+                print("========result=======" + result)
+                return Resource.Success(result)
             }
         }
         return Resource.Error(response.message())

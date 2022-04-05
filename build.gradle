@@ -3,6 +3,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://maven.neshan.org/artifactory/public-maven" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
