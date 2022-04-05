@@ -17,39 +17,76 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
 
-class ProfileViewModel(application: Application , val repository: ProfileRepository) :
+class ProfileViewModel(application: Application, val repository: ProfileRepository) :
     AndroidViewModel(application) {
 
-    val request = RequestBean(1,"test","09121234567","02188888888","omid"
-        ,"Male","zakeri",35.7717503,51.3365315)
-    val profileRepository: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
-    var responseBean: ResponseBean? = null
+    val request = RequestBean(
+        1, "test", "09121234567", "02188888888", "omid", "Male", "zakeri", 35.7717503, 51.3365315
+    )
 
-    fun getSaveProfileResponse(requestBean: RequestBean) = viewModelScope.launch {
-        saveProfile(request)
+
+    val saveAddressRepose: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
+    val getAddressRepose: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
+
+    init {
+        getAddressListResponse()
     }
 
-    suspend fun saveProfile(requestBean: RequestBean) {
+    fun getSaveAddressResponse(requestBean: RequestBean) = viewModelScope.launch {
+        saveAddress(request)
+    }
 
-        profileRepository.postValue(Resource.Loading())
+    fun getAddressListResponse() = viewModelScope.launch {
+        getAddressList()
+    }
+
+    suspend fun saveAddress(requestBean: RequestBean) {
+
+        saveAddressRepose.postValue(Resource.Loading())
 
         try {
             if (hasInternetConnection()) {
-                val response = repository.saveContent(requestBean)
+                val response = repository.saveAddress(requestBean)
                 print("requestBean==" + requestBean.address)
                 print("requestBean==" + requestBean.first_name)
                 print("requestBean==" + requestBean.last_name)
-                profileRepository.postValue(handleSaveProfile(response))
+                saveAddressRepose.postValue(handleSaveAddress(response))
             }
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> profileRepository.postValue(Resource.Error("Network Failure"))
-                else -> profileRepository.postValue(Resource.Error("Conversion Error"))
+                is IOException -> saveAddressRepose.postValue(Resource.Error("Network Failure"))
+                else -> saveAddressRepose.postValue(Resource.Error("Conversion Error"))
             }
         }
     }
 
-    fun handleSaveProfile(response: Response<ResponseBean>): Resource<ResponseBean> {
+    suspend fun getAddressList() {
+        getAddressRepose.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response = repository.getAddress()
+                getAddressRepose.postValue(handleGetAddress(response))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> getAddressRepose.postValue(Resource.Error("Network Failure"))
+                else -> getAddressRepose.postValue(Resource.Error("Conversion Error"))
+            }
+        }
+    }
+
+
+    fun handleSaveAddress(response: Response<ResponseBean>): Resource<ResponseBean> {
+        if (response.isSuccessful) {
+            response.body()?.let { result ->
+                print("========result=======" + result)
+                return Resource.Success(result)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    fun handleGetAddress(response: Response<ResponseBean>): Resource<ResponseBean> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
                 print("========result=======" + result)

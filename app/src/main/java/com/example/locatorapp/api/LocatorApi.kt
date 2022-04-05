@@ -5,6 +5,7 @@ import com.example.locatorapp.model.ResponseBean
 import com.example.locatorapp.util.Constant.Companion.CONTENT_PROVIDER
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
@@ -16,4 +17,7 @@ interface LocatorApi {
         @Header("Content-Type") content_type: String = "application/json",
         @Body requestBean: RequestBean
     ): Response<ResponseBean>
+
+    @GET("api/karfarmas/address")
+    suspend fun getAddress(): Response<ResponseBean>
 }

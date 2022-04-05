@@ -27,12 +27,12 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         profileViewModel = (activity as MainActivity).profileViewModel
         val navController: NavController = Navigation.findNavController(view)
-        profileViewModel.profileRepository.observe(viewLifecycleOwner, Observer { response ->
+        profileViewModel.saveAddressRepose.observe(viewLifecycleOwner, Observer { response ->
 
             when (response) {
                 is Resource.Success -> {
-                    response.data?.let { profileResponse ->
-                        print("profileResponse====" + profileResponse.address)
+                    response.data?.let { saveResponse ->
+                        print("profileResponse====" + saveResponse.address)
                     }
                 }
 
