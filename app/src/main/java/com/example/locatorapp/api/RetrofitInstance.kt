@@ -11,7 +11,11 @@ class RetrofitInstance {
     companion object {
 
         private val retrofit by lazy {
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
             val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
                 .addInterceptor(BasicAuthInterceptor("09822222222", "Sana12345678"))
                 .build()
             Retrofit.Builder()

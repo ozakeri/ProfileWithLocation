@@ -2,7 +2,7 @@ package com.example.locatorapp.api
 
 import com.example.locatorapp.model.RequestBean
 import com.example.locatorapp.model.ResponseBean
-import com.example.locatorapp.util.Constant.Companion.CONTENT_PROVIDER
+import com.example.locatorapp.model.ResponseList
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,5 +19,5 @@ interface LocatorApi {
     ): Response<ResponseBean>
 
     @GET("api/karfarmas/address")
-    suspend fun getAddress(): Response<ResponseBean>
+    suspend fun getAddress(): Response<ResponseList>
 }

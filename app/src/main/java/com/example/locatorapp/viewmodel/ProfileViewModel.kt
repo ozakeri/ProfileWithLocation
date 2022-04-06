@@ -5,12 +5,14 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.locatorapp.ProfileApplication
 import com.example.locatorapp.model.RequestBean
 import com.example.locatorapp.model.ResponseBean
+import com.example.locatorapp.model.ResponseList
 import com.example.locatorapp.repository.ProfileRepository
 import com.example.locatorapp.util.Resource
 import kotlinx.coroutines.launch
@@ -26,7 +28,7 @@ class ProfileViewModel(application: Application, val repository: ProfileReposito
 
 
     val saveAddressRepose: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
-    val getAddressRepose: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
+    val getAddressRepose: MutableLiveData<Resource<ResponseList>> = MutableLiveData()
 
     init {
         getAddressListResponse()
@@ -62,17 +64,20 @@ class ProfileViewModel(application: Application, val repository: ProfileReposito
 
     suspend fun getAddressList() {
         getAddressRepose.postValue(Resource.Loading())
-        try {
-            if (hasInternetConnection()) {
-                val response = repository.getAddress()
-                getAddressRepose.postValue(handleGetAddress(response))
-            }
-        } catch (t: Throwable) {
-            when (t) {
-                is IOException -> getAddressRepose.postValue(Resource.Error("Network Failure"))
-                else -> getAddressRepose.postValue(Resource.Error("Conversion Error"))
-            }
+        //try {
+        if (hasInternetConnection()) {
+            val response = repository.getAddress()
+            getAddressRepose.postValue(handleGetAddress(response))
+        } else {
+            getAddressRepose.postValue(Resource.Error("No internet connection"))
         }
+        /* } catch (t: Throwable) {
+             print("=========t=======" + t.message)
+             when (t) {
+                 is IOException -> getAddressRepose.postValue(Resource.Error("Network Failure"))
+                 else -> getAddressRepose.postValue(Resource.Error("Conversion Error"))
+             }
+         }*/
     }
 
 
@@ -86,10 +91,10 @@ class ProfileViewModel(application: Application, val repository: ProfileReposito
         return Resource.Error(response.message())
     }
 
-    fun handleGetAddress(response: Response<ResponseBean>): Resource<ResponseBean> {
+    fun handleGetAddress(response: Response<ResponseList>): Resource<ResponseList> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
-                print("========result=======" + result)
+                Log.e("resultTAG" , result.toString())
                 return Resource.Success(result)
             }
         }

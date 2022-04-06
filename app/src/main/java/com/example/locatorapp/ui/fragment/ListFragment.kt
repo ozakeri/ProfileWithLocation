@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.locatorapp.R
+import com.example.locatorapp.adapter.AddressListAdapter
+import com.example.locatorapp.model.ResponseBean
 import com.example.locatorapp.ui.MainActivity
 import com.example.locatorapp.util.Resource
 import com.example.locatorapp.viewmodel.ProfileViewModel
@@ -18,19 +21,22 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
 
     lateinit var profileViewModel: ProfileViewModel
+    lateinit var addressListAdapter: AddressListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         profileViewModel = (activity as MainActivity).profileViewModel
+        setupRecyclerView()
 
         val navController: NavController = Navigation.findNavController(view)
 
         profileViewModel.getAddressRepose.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    print("=====Success====")
                     response.data?.let { addressListResponse ->
-                        print("profileResponse====" + addressListResponse.address)
+                        addressListAdapter.differ.submitList(addressListResponse)
                     }
                 }
 
@@ -49,6 +55,14 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
         floatingActionButton.setOnClickListener {
             navController.navigate(R.id.saveFragment);
+        }
+    }
+
+    private fun setupRecyclerView() {
+        addressListAdapter = AddressListAdapter()
+        recyclerView.apply {
+            adapter = addressListAdapter
+            layoutManager = LinearLayoutManager(activity)
         }
     }
 }

@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
         val repository = ProfileRepository()
         val viewModelProviderFactory = ProfileViewModelProviderFactory(application, repository)
-        profileViewModel =
-            ViewModelProvider(this, viewModelProviderFactory).get(ProfileViewModel::class.java)
-    }
+        profileViewModel = ViewModelProvider(this, viewModelProviderFactory).get(ProfileViewModel::class.java)
+  }
 }
