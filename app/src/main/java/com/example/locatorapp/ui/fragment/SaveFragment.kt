@@ -2,51 +2,46 @@ package com.example.locatorapp.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.locatorapp.ProfileApplication
 import com.example.locatorapp.R
 import com.example.locatorapp.model.RequestBean
-import com.example.locatorapp.ui.MainActivity
-import com.example.locatorapp.util.Resource
-import com.example.locatorapp.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_save.*
 
 class SaveFragment : Fragment(R.layout.fragment_save) {
 
-    lateinit var profileViewModel: ProfileViewModel
-    //lateinit var region,address,lat,lng,coordinate_mobile,coordinate_phone_number,first_name,last_name,gender
+
+    private var gender: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileViewModel = (activity as MainActivity).profileViewModel
+
         val navController: NavController = Navigation.findNavController(view)
-        profileViewModel.saveAddressRepose.observe(viewLifecycleOwner, Observer { response ->
 
-            when (response) {
-                is Resource.Success -> {
-                    response.data?.let { saveResponse ->
-                        print("profileResponse====" + saveResponse.address)
-                    }
+
+        toggle.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+
+            val radio: RadioButton = group.findViewById(checkedId)
+
+            when (radio.id) {
+                R.id.radio_female -> {
+                    gender = "Female"
                 }
 
-                is Resource.Error -> {
-                    response.message?.let { message ->
-                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-
-                is Resource.Loading -> {
-                    print("====Loading====")
+                R.id.radio_male -> {
+                    gender = "Male"
                 }
             }
+
+            Log.e("selectedtext-->", radio.text.toString())
 
         })
 
@@ -59,30 +54,31 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
             val address = edt_address?.text.toString().trim()
             val context = view.context
 
-            val check = chekInput(context,name,family,phone,mobileNumber,address)
+            val check = chekInput(context, name, family, phone, mobileNumber, address)
 
-            if (check){
+           // if (check) {
                 val request = RequestBean(
                     1,
                     address,
                     mobileNumber,
                     phone,
                     name,
-                    "MALE",
+                    gender,
                     family,
-                    35.7717503,
-                    51.3365315
+                    0.0,
+                    0.0
                 )
-                profileViewModel.getSaveAddressResponse(request)
-            }
+                //
 
-
-            //navController.navigate(R.id.mapFragment);
+                val bundle = bundleOf("dataModel" to request)
+                navController.navigate(R.id.mapFragment, bundle);
+           // }
         }
     }
 
 
-    fun chekInput(context: Context,
+    fun chekInput(
+        context: Context,
         name: String,
         family: String,
         phone: String,
@@ -138,4 +134,5 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         return true
     }
+
 }

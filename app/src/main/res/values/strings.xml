@@ -12,4 +12,5 @@
     <string name="female_lable">خانم</string>
     <string name="next_lable">مرحله بعد</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="confirm">تایید وقعیت</string>
 </resources>
