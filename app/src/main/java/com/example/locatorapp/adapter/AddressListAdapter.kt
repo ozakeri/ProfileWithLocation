@@ -1,5 +1,6 @@
 package com.example.locatorapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,13 +33,13 @@ class AddressListAdapter() : RecyclerView.Adapter<AddressListAdapter.CustomView>
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CustomView, position: Int) {
         val response = differ.currentList[position]
         holder.itemView.apply {
             txt_address.text = response.address
-            txt_name.text = response.first_name
-            txt_family.text = response.last_name
-            txt_mobild.text = response.coordinate_mobile
+            txt_nameFamily.text = response.first_name  + " " + response.last_name
+            txt_mobile.text = response.coordinate_mobile
         }
     }
 

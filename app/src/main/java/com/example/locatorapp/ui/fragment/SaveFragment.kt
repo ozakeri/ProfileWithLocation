@@ -52,27 +52,32 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         btn_save.setOnClickListener {
 
-           /* val name = edt_name?.text.toString().trim()
+            val name = edt_name?.text.toString().trim()
             val family = edt_family?.text.toString().trim()
             val phone = edt_phone?.text.toString().trim()
             val mobileNumber = edt_mobileNumber?.text.toString().trim()
             val address = edt_address?.text.toString().trim()
             val context = view.context
 
-            val request = RequestBean(
-                1,
-                address,
-                mobileNumber,
-                phone,
-                name,
-                "MALE",
-                family,
-                35.7717503,
-                51.3365315
-            )
-            profileViewModel.getSaveProfileResponse(request)*/
+            val check = chekInput(context,name,family,phone,mobileNumber,address)
 
-            navController.navigate(R.id.mapFragment);
+            if (check){
+                val request = RequestBean(
+                    1,
+                    address,
+                    mobileNumber,
+                    phone,
+                    name,
+                    "MALE",
+                    family,
+                    35.7717503,
+                    51.3365315
+                )
+                profileViewModel.getSaveAddressResponse(request)
+            }
+
+
+            //navController.navigate(R.id.mapFragment);
         }
     }
 
