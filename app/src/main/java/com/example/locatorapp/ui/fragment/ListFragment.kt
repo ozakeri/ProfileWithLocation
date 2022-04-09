@@ -39,7 +39,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 is Resource.Success -> {
                     hideProgressBar()
                     hideErrorMessage()
-                    floatingActionButton.visibility = View.VISIBLE
                     print("=====Success====")
                     response.data?.let { addressListResponse ->
                         addressListAdapter.differ.submitList(addressListResponse)
@@ -48,23 +47,19 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
                 is Resource.Error -> {
                     hideProgressBar()
-                    floatingActionButton.visibility = View.VISIBLE
                     response.message?.let { message ->
                         Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG)
                             .show()
+                        showErrorMessage(message)
                     }
                 }
 
                 is Resource.Loading -> {
                     showProgressBar()
-                    floatingActionButton.visibility = View.INVISIBLE
                 }
             }
         })
 
-        floatingActionButton.setOnClickListener {
-            navController.navigate(R.id.saveFragment);
-        }
     }
 
     private fun setupRecyclerView() {

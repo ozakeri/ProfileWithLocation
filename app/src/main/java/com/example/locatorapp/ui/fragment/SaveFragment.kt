@@ -19,10 +19,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.locatorapp.R
 import com.example.locatorapp.model.RequestBean
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_save.*
 
 class SaveFragment : Fragment(R.layout.fragment_save) {
-
 
     private var gender: String = "Male"
 
@@ -175,5 +175,7 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         return true
     }
+
+
 
 }

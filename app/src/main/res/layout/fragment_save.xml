@@ -183,7 +183,8 @@
                         android:layout_height="50dp"
                         android:layout_toStartOf="@+id/txt_mobile"
                         android:layout_toEndOf="@+id/img_status3"
-                        android:background="@null" />
+                        android:background="@null"
+                        android:inputType="number" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_status3"
@@ -225,7 +226,8 @@
                         android:layout_height="50dp"
                         android:layout_toStartOf="@+id/txt_phone"
                         android:layout_toEndOf="@+id/img_status4"
-                        android:background="@null" />
+                        android:background="@null"
+                        android:inputType="number"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_status4"
@@ -376,6 +378,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

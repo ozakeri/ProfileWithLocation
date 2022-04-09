@@ -8,30 +8,29 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.locatorapp.R
 import com.example.locatorapp.model.RequestBean
 import com.example.locatorapp.ui.MainActivity
 import com.example.locatorapp.util.Resource
 import com.example.locatorapp.viewmodel.ProfileViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.android.gms.maps.model.LatLng
-
-import com.google.android.gms.maps.CameraUpdateFactory
-
-import com.google.android.gms.maps.CameraUpdate
-
-
-
+import kotlinx.android.synthetic.main.fragment_map.btn_confirm
+import kotlinx.android.synthetic.main.fragment_maps.*
 
 
 class MapsFragment : Fragment() {
 
     lateinit var profileViewModel: ProfileViewModel
     lateinit var args: RequestBean
+    lateinit var navController: NavController
     var latitude: Double = 0.0
     var longitude: Double = 0.0
+    var isLoading = false
 
     private val callback = OnMapReadyCallback { googleMap ->
 
@@ -46,7 +45,8 @@ class MapsFragment : Fragment() {
 
         val center = CameraUpdateFactory.newLatLng(
             LatLng(
-                35.739623,51.411651)
+                35.739623, 51.411651
+            )
         )
 
         val zoom = CameraUpdateFactory.zoomTo(18f)
@@ -84,6 +84,33 @@ class MapsFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
 
         profileViewModel = (activity as MainActivity).profileViewModel
+
+        profileViewModel.saveAddressRepose.observe(viewLifecycleOwner, Observer { response ->
+
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let { saveResponse ->
+                        print("profileResponse====" + saveResponse.address)
+                    }
+                }
+
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let { message ->
+                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+            }
+
+        })
+
+        navController = Navigation.findNavController(view)
 
         profileViewModel.saveAddressRepose.observe(viewLifecycleOwner, Observer { response ->
 
@@ -133,10 +160,20 @@ class MapsFragment : Fragment() {
                 Log.e("address===", request.address.toString())
                 Log.e("lat===", request.lat.toString())
                 Log.e("lng===", request.lng.toString())
-               // profileViewModel.getSaveAddressResponse(request)
-                //activity?.finish()
+                navController.navigate(R.id.listFragment)
+                profileViewModel.getSaveAddressResponse(request)
             }
         }
+    }
+
+    private fun hideProgressBar() {
+        progress_circular.visibility = View.INVISIBLE
+        isLoading = false
+    }
+
+    private fun showProgressBar() {
+        progress_circular.visibility = View.VISIBLE
+        isLoading = true
     }
 
 }

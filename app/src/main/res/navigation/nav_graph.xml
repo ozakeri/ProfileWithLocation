@@ -22,16 +22,12 @@
             app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.locatorapp.ui.fragment.MapFragment"
-        android:label="MapFragment" >
-        <action
-            android:id="@+id/action_mapFragment_to_listFragment"
-            app:destination="@id/listFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.locatorapp.ui.fragment.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
 </navigation>
