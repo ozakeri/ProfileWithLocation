@@ -18,13 +18,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="200dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView3"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,52 +42,37 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/textView1"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3"
-                app:layout_constraintWidth_percent="0.5">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_mobile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right |center_vertical"
-                    android:drawableRight="@drawable/ic_phone"
-                    android:text="..."
-                    android:layout_margin="5dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:layout_marginTop="4dp"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right |center_vertical"
+                android:layout_marginTop="16dp"
+                android:drawableRight="@drawable/ic_phone"
+                android:text="..."
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@id/textView1"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3"
-                app:layout_constraintWidth_percent="0.5">
+                app:layout_constraintHorizontal_bias="0.972"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_nameFamily" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_nameFamily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right |center_vertical"
-                    android:drawableRight="@drawable/ic_person"
-                    android:text="..."
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_nameFamily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right |center_vertical"
+                android:layout_marginTop="16dp"
+                android:drawableRight="@drawable/ic_person"
+                android:text="..."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.972"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
-            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

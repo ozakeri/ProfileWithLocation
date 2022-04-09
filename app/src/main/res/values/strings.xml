@@ -13,4 +13,8 @@
     <string name="next_lable">مرحله بعد</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="confirm">تایید وقعیت</string>
+    <string name="check_null_toast">اطلاعات کامل وارد کنید</string>
+    <string name="check_mobileNo">شماره موبایل به درستی وارد نشده است</string>
+    <string name="check_phone">شماره تلفن به درستی وارد نشده است</string>
+    <string name="custom_font">اطلاعات کامل وارد کنید</string>
 </resources>

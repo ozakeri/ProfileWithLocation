@@ -4,11 +4,13 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        //Add Neshan maven repo here
         maven { url "https://maven.neshan.org/artifactory/public-maven" }
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-            name 'OSS-Sonatype'
+
+        flatDir {
+            dirs 'libs'
         }
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"

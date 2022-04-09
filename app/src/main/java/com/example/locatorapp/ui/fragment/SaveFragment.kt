@@ -2,10 +2,16 @@ package com.example.locatorapp.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -18,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_save.*
 class SaveFragment : Fragment(R.layout.fragment_save) {
 
 
-    private var gender: String = ""
+    private var gender: String = "Male"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,6 +32,33 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         val navController: NavController = Navigation.findNavController(view)
 
+        fun mTextWatcher(img : ImageView) = object : TextWatcher {
+            override fun afterTextChanged(et: Editable?) {
+
+                if (TextUtils.isEmpty(et.toString().trim())) {
+                    img.background =
+                        ContextCompat.getDrawable(view.context, R.drawable.ic_remove_circle)
+                } else {
+                    img.background =
+                        ContextCompat.getDrawable(view.context, R.drawable.ic_check_circle)
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        }
+
+        edt_name.addTextChangedListener(mTextWatcher(img_status))
+        edt_family.addTextChangedListener(mTextWatcher(img_status2))
+        edt_mobileNumber.addTextChangedListener(mTextWatcher(img_status3))
+        edt_phone.addTextChangedListener(mTextWatcher(img_status4))
+        edt_address.addTextChangedListener(mTextWatcher(img_status5))
+
+        radio_male.isChecked
+        radio_male.setTextColor(resources.getColor(R.color.white))
+        radio_female.setTextColor(resources.getColor(R.color.purple_500))
 
         toggle.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
 
@@ -34,10 +67,14 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
             when (radio.id) {
                 R.id.radio_female -> {
                     gender = "Female"
+                    radio_female.setTextColor(resources.getColor(R.color.white))
+                    radio_male.setTextColor(resources.getColor(R.color.purple_500))
                 }
 
                 R.id.radio_male -> {
                     gender = "Male"
+                    radio_male.setTextColor(resources.getColor(R.color.white))
+                    radio_female.setTextColor(resources.getColor(R.color.purple_500))
                 }
             }
 
@@ -56,7 +93,7 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
             val check = chekInput(context, name, family, phone, mobileNumber, address)
 
-           // if (check) {
+            if (check) {
                 val request = RequestBean(
                     1,
                     address,
@@ -68,11 +105,15 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
                     0.0,
                     0.0
                 )
-                //
+
 
                 val bundle = bundleOf("dataModel" to request)
-                navController.navigate(R.id.mapFragment, bundle);
-           // }
+                navController.navigate(R.id.mapsFragment, bundle);
+            }
+        }
+
+        img_back.setOnClickListener {
+            activity?.finish()
         }
     }
 
@@ -90,45 +131,45 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         if (!name.isNullOrBlank()) {
             requestBean?.first_name = name
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_check_circle)
         } else {
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_remove_circle)
+            Toast.makeText(activity, getString(R.string.check_null_toast), Toast.LENGTH_LONG)
+                .show()
             return false
         }
 
 
         if (!family.isNullOrBlank()) {
             requestBean?.last_name = family
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_check_circle)
         } else {
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_remove_circle)
+            Toast.makeText(activity, getString(R.string.check_null_toast), Toast.LENGTH_LONG)
+                .show()
             return false
         }
 
 
         if (!phone.isNullOrBlank() && phone.length == 11) {
             requestBean?.coordinate_phone_number = phone
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_check_circle)
         } else {
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_remove_circle)
+            Toast.makeText(activity, getString(R.string.check_phone), Toast.LENGTH_LONG)
+                .show()
             return false
         }
 
 
         if (!mobileNumber.isNullOrBlank() && mobileNumber.length == 11) {
             requestBean?.coordinate_mobile = mobileNumber
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_check_circle)
         } else {
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_remove_circle)
+            Toast.makeText(activity, getString(R.string.check_mobileNo), Toast.LENGTH_LONG)
+                .show()
             return false
         }
 
 
         if (!address.isNullOrBlank()) {
             requestBean?.address = address
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_check_circle)
         } else {
-            img_status.background = ContextCompat.getDrawable(context, R.drawable.ic_remove_circle)
+            Toast.makeText(activity, getString(R.string.check_null_toast), Toast.LENGTH_LONG)
+                .show()
             return false
         }
 

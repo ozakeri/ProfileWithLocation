@@ -3,17 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white">>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        android:background="@color/white">>
 
 
         <TextView
@@ -83,11 +85,11 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/purple_500"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:text="@string/name_lable"
+                        android:textColor="@color/teal_700"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -97,7 +99,7 @@
                         android:layout_height="50dp"
                         android:layout_toStartOf="@+id/txt_name"
                         android:layout_toEndOf="@+id/img_status"
-                        android:background="@null"/>
+                        android:background="@null" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_status"
@@ -109,7 +111,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/ic_check_circle" />
+                        android:background="@drawable/ic_remove_circle" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -125,7 +127,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/purple_500"
+                        android:textColor="@color/teal_700"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
@@ -151,7 +153,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/ic_check_circle" />
+                        android:background="@drawable/ic_remove_circle" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -171,7 +173,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:text="@string/name_mobile_phone"
-                        android:textColor="@color/purple_500"
+                        android:textColor="@color/teal_700"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -193,7 +195,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/ic_check_circle"/>
+                        android:background="@drawable/ic_remove_circle" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -209,7 +211,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/purple_500"
+                        android:textColor="@color/teal_700"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
@@ -223,8 +225,7 @@
                         android:layout_height="50dp"
                         android:layout_toStartOf="@+id/txt_phone"
                         android:layout_toEndOf="@+id/img_status4"
-                        android:background="@null"
-                        />
+                        android:background="@null" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_status4"
@@ -236,7 +237,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/ic_check_circle" />
+                        android:background="@drawable/ic_remove_circle" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -267,8 +268,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:textColor="@color/purple_500"
                     android:text="@string/address_lable"
+                    android:textColor="@color/teal_700"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -283,7 +284,18 @@
                         android:id="@+id/edt_address"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:layout_toEndOf="@+id/img_status5"
                         android:background="@null" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_status5"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/ic_remove_circle" />
 
                 </RelativeLayout>
 
@@ -291,7 +303,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_address"
-                    android:layout_marginTop="10dp">
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:id="@+id/txt_gender"
@@ -304,6 +317,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:text="@string/gender_lable"
+                        android:textColor="@color/teal_700"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -329,7 +343,7 @@
                             android:button="@null"
                             android:gravity="center"
                             android:text="@string/female_lable"
-                            android:textColor="@color/purple_500" />
+                            android:textColorLink="@color/purple_200" />
 
                         <RadioButton
                             android:id="@+id/radio_male"
@@ -343,7 +357,8 @@
                             android:button="@null"
                             android:gravity="center"
                             android:text="@string/male_lable"
-                            android:textColor="@color/white" />
+                            android:textColorLink="@color/purple_200"
+                            android:checked="true"/>
                     </RadioGroup>
 
                 </RelativeLayout>

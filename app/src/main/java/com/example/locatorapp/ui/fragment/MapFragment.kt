@@ -1,7 +1,7 @@
 package com.example.locatorapp.ui.fragment
 
+import android.location.LocationManager
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -13,51 +13,22 @@ import com.example.locatorapp.ui.MainActivity
 import com.example.locatorapp.util.Resource
 import com.example.locatorapp.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_map.*
-import org.osmdroid.api.IMapController
-import org.osmdroid.config.Configuration
-import org.osmdroid.views.MapView
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 
 class MapFragment : Fragment(R.layout.fragment_map) {
 
     lateinit var profileViewModel: ProfileViewModel
     lateinit var args: RequestBean
-    lateinit var point : GeoPoint
-    lateinit var marker  : Marker
-
-    var mapview :  MapView? = null
-    var mapController: IMapController? = null
+    //lateinit var mapView: MapView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         profileViewModel = (activity as MainActivity).profileViewModel
-
-
-        Configuration.getInstance()
-            .load(activity, PreferenceManager.getDefaultSharedPreferences(activity))
-
-        mapController = mapview?.getController()
-        mapController?.setZoom(15)
-        mapview?.setTilesScaledToDpi(true);
-        mapview?.setBuiltInZoomControls(true);
-        mapview?.setMultiTouchControls(true);
-
-        point = GeoPoint(35.7448416, 51.3775099, 17.0)
-
-        marker = Marker(mapView)
-
-        marker.setPosition(point);
-
-        marker.setTitle("برج میلاد");
-
-        marker.setSubDescription("توضیحات");
-
-        mapview?.getOverlays()?.add(marker);
-
-        mapController?.setCenter(point);
 
         profileViewModel.saveAddressRepose.observe(viewLifecycleOwner, Observer { response ->
 
@@ -88,6 +59,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         }
         //getData()
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -77,16 +77,12 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.4.1"
     implementation "androidx.navigation:navigation-ui-ktx:2.4.1"
 
-    //Neshan sdk library
-    implementation 'neshan-android-sdk:mobile-sdk:1.0.1'
-    implementation 'neshan-android-sdk:services-sdk:1.0.0'
-    implementation 'neshan-android-sdk:common-sdk:0.0.2'
 
-    //Play Services
-    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:19.0.1'
-    implementation 'com.github.bullheadandplato:MuftPlacePicker:1.0.0'
-
+    //I changed 23.something to 25 because error
+    //compile "com.android.support:support-v4:25"
     implementation 'org.osmdroid:osmdroid-android:6.1.8'
+    implementation 'org.apache.commons:commons-lang3:3.3.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
 
 }
