@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.locatorapp.R
-import com.example.locatorapp.adapter.AddressListAdapter
+import com.example.locatorapp.ui.adapter.AddressListAdapter
 import com.example.locatorapp.ui.MainActivity
 import com.example.locatorapp.util.Resource
 import com.example.locatorapp.viewmodel.ProfileViewModel
@@ -32,8 +32,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         profileViewModel = (activity as MainActivity).profileViewModel
         setupRecyclerView()
 
-        val navController: NavController = Navigation.findNavController(view)
 
+        /*
+        * handle status Loading / Success Or Error
+        */
         profileViewModel.getAddressRepose.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
@@ -59,8 +61,8 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 }
             }
         })
-
     }
+
 
     private fun setupRecyclerView() {
         addressListAdapter = AddressListAdapter()
@@ -91,4 +93,5 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         tvErrorMessage.text = message
         isError = true
     }
+
 }

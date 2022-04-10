@@ -2,7 +2,6 @@ package com.example.locatorapp.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -19,7 +18,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.locatorapp.R
 import com.example.locatorapp.model.RequestBean
-import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_save.*
 
 class SaveFragment : Fragment(R.layout.fragment_save) {
@@ -32,7 +30,11 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         val navController: NavController = Navigation.findNavController(view)
 
-        fun mTextWatcher(img : ImageView) = object : TextWatcher {
+
+        /*
+       * Check EditText Status
+       */
+        fun mTextWatcher(img: ImageView) = object : TextWatcher {
             override fun afterTextChanged(et: Editable?) {
 
                 if (TextUtils.isEmpty(et.toString().trim())) {
@@ -46,20 +48,28 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         }
-
         edt_name.addTextChangedListener(mTextWatcher(img_status))
         edt_family.addTextChangedListener(mTextWatcher(img_status2))
         edt_mobileNumber.addTextChangedListener(mTextWatcher(img_status3))
         edt_phone.addTextChangedListener(mTextWatcher(img_status4))
         edt_address.addTextChangedListener(mTextWatcher(img_status5))
 
+
+        /*
+       * set default
+       */
         radio_male.isChecked
         radio_male.setTextColor(resources.getColor(R.color.white))
         radio_female.setTextColor(resources.getColor(R.color.purple_500))
 
+
+        /*
+      * Handle RadioButton Status
+      */
         toggle.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
 
             val radio: RadioButton = group.findViewById(checkedId)
@@ -118,6 +128,9 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
     }
 
 
+    /*
+     * Check correct input value and return warning
+     */
     fun chekInput(
         context: Context,
         name: String,
@@ -175,7 +188,6 @@ class SaveFragment : Fragment(R.layout.fragment_save) {
 
         return true
     }
-
 
 
 }

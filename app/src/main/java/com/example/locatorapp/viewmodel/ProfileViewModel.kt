@@ -22,11 +22,6 @@ import java.io.IOException
 class ProfileViewModel(application: Application, val repository: ProfileRepository) :
     AndroidViewModel(application) {
 
-    val request = RequestBean(
-        1, "test", "09121234567", "02188888888", "omid", "Male", "zakeri", 35.7717503, 51.3365315
-    )
-
-
     val saveAddressRepose: MutableLiveData<Resource<ResponseBean>> = MutableLiveData()
     val getAddressRepose: MutableLiveData<Resource<ResponseList>> = MutableLiveData()
 
@@ -35,7 +30,7 @@ class ProfileViewModel(application: Application, val repository: ProfileReposito
     }
 
     fun getSaveAddressResponse(requestBean: RequestBean) = viewModelScope.launch {
-        saveAddress(request)
+        saveAddress(requestBean)
     }
 
     fun getAddressListResponse() = viewModelScope.launch {
@@ -49,9 +44,6 @@ class ProfileViewModel(application: Application, val repository: ProfileReposito
         try {
             if (hasInternetConnection()) {
                 val response = repository.saveAddress(requestBean)
-                print("requestBean==" + requestBean.address)
-                print("requestBean==" + requestBean.first_name)
-                print("requestBean==" + requestBean.last_name)
                 saveAddressRepose.postValue(handleSaveAddress(response))
             }
         } catch (t: Throwable) {
@@ -64,27 +56,25 @@ class ProfileViewModel(application: Application, val repository: ProfileReposito
 
     suspend fun getAddressList() {
         getAddressRepose.postValue(Resource.Loading())
-        //try {
+        try {
         if (hasInternetConnection()) {
             val response = repository.getAddress()
             getAddressRepose.postValue(handleGetAddress(response))
         } else {
             getAddressRepose.postValue(Resource.Error("No internet connection"))
         }
-        /* } catch (t: Throwable) {
-             print("=========t=======" + t.message)
+         } catch (t: Throwable) {
              when (t) {
                  is IOException -> getAddressRepose.postValue(Resource.Error("Network Failure"))
                  else -> getAddressRepose.postValue(Resource.Error("Conversion Error"))
              }
-         }*/
+         }
     }
 
 
     fun handleSaveAddress(response: Response<ResponseBean>): Resource<ResponseBean> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
-                print("========result=======" + result)
                 return Resource.Success(result)
             }
         }

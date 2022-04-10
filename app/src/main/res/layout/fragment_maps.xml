@@ -21,11 +21,11 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/confirm_address_map_custom_marker"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
         android:layout_above="@+id/view"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_marker"/>
+        android:background="@drawable/marker"/>
 
     <Button
         android:id="@+id/btn_confirm"
@@ -46,9 +46,6 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

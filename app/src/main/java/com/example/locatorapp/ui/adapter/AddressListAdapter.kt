@@ -1,4 +1,4 @@
-package com.example.locatorapp.adapter
+package com.example.locatorapp.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
